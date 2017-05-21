@@ -17,11 +17,6 @@ export default {
         url: 'http://0.0.0.0:8090/upload'
       }
     }
-  },
-  methods: {
-    test (e) {
-      console.log('test', e)
-    }
   }
 }
 </script>

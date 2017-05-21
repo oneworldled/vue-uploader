@@ -233,6 +233,10 @@ export default {
     },
     remove (file) {
       this.$uploader.remove(file)
+      let index = this.files.indexOf(file)
+      if(index !== -1) {
+        this.files.splice(index, 1)
+      }
     }
   },
 }
