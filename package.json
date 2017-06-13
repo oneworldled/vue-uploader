@@ -2,7 +2,7 @@
   "name": "vue-uploader",
   "version": "1.0.0",
   "description": "A uploading library for Vue.js",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "test"
   },
