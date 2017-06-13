@@ -6,7 +6,7 @@
    @dragend.prevent="call($event, 'end')">
     <form v-on:submit.prevent="upload" ref="form" :files="files">
       <slot name="form-fields"></slot>
-      <slot name="file-input">
+      <slot name="file-input" :files='files'>
         <input id="default-file-input" type="file" @change="fileChange" multiple :accept="acceptedTypes"/>
         <input type="submit" value="Upload">
       </slot>
@@ -62,6 +62,7 @@ export default {
     let fileInputs = this.getFileInputs()
     for (let fileInput of fileInputs) {
       fileInput.addEventListener('change', this.fileChange)
+      fileInput.accept = this.acceptedTypes
     }
   },
   beforeDestroy () {
