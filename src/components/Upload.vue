@@ -45,6 +45,12 @@ export default {
     destination: {
       type: String,
       required: false
+    },
+    headers: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
   data () {
@@ -164,7 +170,8 @@ export default {
       for (let file of newFiles){
         let item = {
           file: file,
-          params: params
+          params: params,
+          headers: this.headers
         }
 
         if (this.destination) {

@@ -2,11 +2,13 @@ var queue = []
 var maxUploads
 var url
 var uploading = 0
+var globalHeaders = {}
 
 function Uploader (Vue, options) {
   options = options || {}
   url = options.url || ''
   maxUploads = options.maxUploads || 3
+  globalHeaders = options.headers || {}
 }
 
 Uploader.prototype.queue = queue
@@ -31,7 +33,8 @@ Uploader.prototype.processQueue = function () {
     let file = this.getNext()
     if (file) {
       let destination = file.destination ? file.destination : url
-      this.upload(destination, file, file.params)
+      let headers = file.headers || {}
+      this.upload(destination, file, file.params, headers)
       this.processQueue()
       uploading++
     }
@@ -99,7 +102,7 @@ Uploader.prototype.error = function (request, file) {
   this.processQueue()
 }
 
-Uploader.prototype.upload = function (url, file, params) {
+Uploader.prototype.upload = function (url, file, params, headers) {
   let self = this
   file.status = 'uploading'
   // Create the request and add some upload listeners
@@ -130,6 +133,13 @@ Uploader.prototype.upload = function (url, file, params) {
   formData.append('file', file.file, file.file.name)
 
   request.open('POST', url, true)
+
+  let requestHeaders = Object.assign({}, this.headers, headers)
+  // set any request headers
+  Object.keys( requestHeaders ).forEach( key => {
+    request.setRequestHeader(key, requestHeaders[key])
+  })
+  
   request.send(formData)
 }
 
