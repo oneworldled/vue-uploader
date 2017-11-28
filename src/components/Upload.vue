@@ -19,6 +19,7 @@
           </li>
         </ul>
       </slot>
+      <button class="btn btn-primary m-2" type="submit" v-on:click="upload" @click="$emit('finished')">Upload</button>
     </form>
   </div>
 </template>
